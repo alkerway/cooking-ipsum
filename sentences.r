@@ -2,8 +2,8 @@ library(keras)
 library(dplyr)
 library(purrr)
 
-setwd('/home/aw/Documents/w/py/scrape-recipes/texts')
-f.names = list.files(pattern = '*.txt')
+setwd('/Users/aw/Documents/w/py/cooking-ipsum/')
+f.names = list.files(path='texts', pattern = '*.txt')
 
 cleanChars = function(txt) {
   txt = gsub('[\']|[‘]|[’]|[“]|[”]|[″]|["]|[\u2028]|[­]|[🙂]|[~]|[=]|[>]', '', txt)
@@ -43,7 +43,7 @@ all.sentences = character()
 all.titles = character()
 print('reading in txt files...')
 for (f.name in f.names[2000:7540]) {
-  f.lines = readLines(f.name, warn = F)
+  f.lines = readLines(paste('texts/', f.name, sep=''), warn = F)
   if (f.lines[1] %in% all.titles) next
   all.titles = c(all.titles, f.lines[1])
   methodIdx = which(f.lines == '==========')[2] + 1
@@ -104,7 +104,6 @@ data_generator <- function(data, batch_size) {
     list(x, y)
   }
 }
-
 gen <- data_generator(data=all.x.y, batch_size = 768)
  
 optimizer <-  optimizer_rmsprop()
