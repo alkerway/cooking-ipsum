@@ -9,3 +9,6 @@ Below are a few of these recipes.
 1. > ```For the sausages, place the mascarpone into a small food processor and blend until smooth. Add the chopped cheese and the remaining sugar. For the mushroom sauce, place the flour and salt in the fridge for about 4-5 minutes, or until the filo pastry is golden-brown and cooled through. For the cheesecakes, place the onion and garlic into a small bowl. Add the spinach and stir well. To serve, place the soup into a serving bowl and serve.```
 
 1. > ```For the meatballs, melt the butter in a large shallow deep heavy-bottomed saucepan over a medium heat. Add the breadcrumbs and cook for 4-5 minutes on each side. To make the mash, place the butter and lemon juice in a small saucepan of boiling salted water and bring to the boil. Reduce the heat to a simmer and cook for ten minutes. To serve, place the steak on top of the potatoes. Serve the strawberries with the mixture and brush with the olive oil.```
+
+
+`recipes.zip` contains around 15,000 recipe txt files with title, ingredients and method in the same format.
