@@ -2,7 +2,7 @@ library(keras)
 library(dplyr)
 library(purrr)
 
-setwd('/home/aw/Documents/w/py/scrape-recipes/texts')
+setwd('/home/aw/Documents/w/py/scrape-recipes')
 f.names = list.files(pattern = '*.txt')
 
 cleanChars = function(txt) {
@@ -121,28 +121,29 @@ model <- keras_model_sequential() %>%
 num.epochs = 3
 model.history = model %>%
   fit_generator(gen, steps_per_epoch = num.data / 768, epochs=num.epochs)
+# model = load_model_hdf5('rec3_2000_7540.model')
 
-model.store = 'rec3_2000_7540.model'
-print(paste('saving to', model.store))
-save_model_hdf5(model, model.store)
+model.store = 'rec3_2000_7540_variable.model'
+# print(paste('saving to', model.store))
+# save_model_hdf5(model, model.store)
 
 runPrediction = function() {
   start.idx <- sample(1:(length(text.block) - maxlen), size = 1)
   cur.sentence <- text.block[start.idx:(start.idx + maxlen - 1)]
   first.sentence <- cur.sentence
   generated = ''
-  gen.length = 600
+  gen.length = 250000
   start.cat = FALSE
   cur_char = ''
   i = 1
-  pb = txtProgressBar(min = i, max = gen.length, initial = 1)
+  pb = txtProgressBar(min = i, max = gen.length, initial = 1, style = 3)
   while (i < gen.length | cur_char != '.') {
     setTxtProgressBar(pb,i)
     x.pred <- sapply(chars, function(x) as.integer(x == cur.sentence))
     x.pred <- array_reshape(x.pred, c(1, dim(x.pred)))
     
     preds <- predict(model, x.pred)
-    cur_char <- sample(chars, 1, prob=preds^2/sum(preds^2))
+    cur_char <- sample(chars, 1, prob=preds^1.5/sum(preds^1.5))
     # cur_char <- chars[next_index]
     cur.sentence <- c(cur.sentence[-1], cur_char)
     if (start.cat) {
