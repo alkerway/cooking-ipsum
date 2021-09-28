@@ -3,66 +3,66 @@ library(dplyr)
 library(purrr)
 
 setwd('/home/aw/Documents/w/py/scrape-recipes')
-f.names = list.files(pattern = '*.txt')
+f.names <- list.files(path='texts', pattern = '*.txt')
 
-cleanChars = function(txt) {
-  txt = gsub('[\']|[‘]|[’]|[“]|[”]|[″]|["]|[\u2028]|[­]|[🙂]|[~]|[=]|[>]', '', txt)
-  txt = gsub('\024', '', txt)
-  txt = gsub('[–]|[—]|[̶]', '-', txt)
-  txt = gsub('[º]|[°]|[˚]', '⁰', txt)
-  txt = gsub('[⁄]', '/', txt)
-  txt = gsub('[[]|[{]', '(', txt)
-  txt = gsub('[]]|[}]', '(', txt)
-  txt = gsub('[¢]|[£]', '$', txt)
-  txt = gsub('\t', ' ', txt)
-  txt = gsub('[×]', 'x', txt)
-  txt = gsub('[⅙]', '1/6', txt)
-  txt = gsub('[⅜]', '3/8', txt)
-  txt = gsub('[⅔]', '2/3', txt)
-  txt = gsub('[⅝]', '5/8', txt)
-  txt = gsub('[⅓]', '1/3', txt)
-  txt = gsub('[⅛]', '1/8', txt)
-  txt = gsub('[¾]', '3/4', txt)
-  txt = gsub('[¼]', '1/4', txt)
-  txt = gsub('[½]', '1/2', txt)
-  txt = gsub('[à]|[â]|[å]|[ä]', 'a', txt)
-  txt = gsub('[ç]', 'c', txt)
-  txt = gsub('[é]|[è]|[ê]|[ë]', 'e', txt)
-  txt = gsub('[í]|[î]|[ï]', 'i', txt)
-  txt = gsub('[ó]|[ô]|[ö]', 'o', txt)
-  txt = gsub('[ú]|[ù]|[û]', 'u', txt)
-  txt = gsub('[ﬂ]|[ﬁ]', 'fl', txt)
-  txt = txt[!grepl('[<]', txt)] # line of html
-  txt = gsub('#', 'number ', txt)
-  txt = gsub('[|]', 'or', txt)
+cleanChars <- function(txt) {
+  txt <- gsub('[\']|[‘]|[’]|[“]|[”]|[″]|["]|[\u2028]|[­]|[🙂]|[~]|[=]|[>]', '', txt)
+  txt <- gsub('\024', '', txt)
+  txt <- gsub('[–]|[—]|[̶]', '-', txt)
+  txt <- gsub('[º]|[°]|[˚]', '⁰', txt)
+  txt <- gsub('[⁄]', '/', txt)
+  txt <- gsub('[[]|[{]', '(', txt)
+  txt <- gsub('[]]|[}]', '(', txt)
+  txt <- gsub('[¢]|[£]', '$', txt)
+  txt <- gsub('\t', ' ', txt)
+  txt <- gsub('[×]', 'x', txt)
+  txt <- gsub('[⅙]', '1/6', txt)
+  txt <- gsub('[⅜]', '3/8', txt)
+  txt <- gsub('[⅔]', '2/3', txt)
+  txt <- gsub('[⅝]', '5/8', txt)
+  txt <- gsub('[⅓]', '1/3', txt)
+  txt <- gsub('[⅛]', '1/8', txt)
+  txt <- gsub('[¾]', '3/4', txt)
+  txt <- gsub('[¼]', '1/4', txt)
+  txt <- gsub('[½]', '1/2', txt)
+  txt <- gsub('[à]|[â]|[å]|[ä]', 'a', txt)
+  txt <- gsub('[ç]', 'c', txt)
+  txt <- gsub('[é]|[è]|[ê]|[ë]', 'e', txt)
+  txt <- gsub('[í]|[î]|[ï]', 'i', txt)
+  txt <- gsub('[ó]|[ô]|[ö]', 'o', txt)
+  txt <- gsub('[ú]|[ù]|[û]', 'u', txt)
+  txt <- gsub('[ﬂ]|[ﬁ]', 'fl', txt)
+  txt <- txt[!grepl('[<]', txt)] # line of html
+  txt <- gsub('#', 'number ', txt)
+  txt <- gsub('[|]', 'or', txt)
   txt
 }
 
-all.recipes = list()
-all.sentences = character()
-all.titles = character()
+all.recipes <- list()
+all.sentences <- character()
+all.titles <- character()
 print('reading in txt files...')
 for (f.name in f.names[2000:7540]) {
-  f.lines = readLines(f.name, warn = F)
+  f.lines <- readLines(paste('texts/', f.name, sep=''), warn = F)
   if (f.lines[1] %in% all.titles) next
-  all.titles = c(all.titles, f.lines[1])
-  methodIdx = which(f.lines == '==========')[2] + 1
-  methodLines = f.lines[methodIdx:length(f.lines)]
-  sentences = methodLines %>%
+  all.titles <- c(all.titles, f.lines[1])
+  methodIdx <- which(f.lines == '==========')[2] + 1
+  methodLines <- f.lines[methodIdx:length(f.lines)]
+  sentences <- methodLines %>%
     strsplit("[.][ ]|[!][ ]") %>%
     unlist() %>%
     trimws()
-  sentences = sentences[sentences != '' & nchar(sentences) > 1]
-  sent.clean = tolower(paste(sub("[.]$|[!]$", "", sentences), '.', sep=''))
-  sent.clean = cleanChars(sent.clean)
-  sent.clean = sent.clean[sent.clean != '']
-  all.sentences = c(all.sentences, sent.clean)
-  all.recipes = c(all.recipes, list(sent.clean))
+  sentences <- sentences[sentences != '' & nchar(sentences) > 1]
+  sent.clean <- tolower(paste(sub("[.]$|[!]$", "", sentences), '.', sep=''))
+  sent.clean <- cleanChars(sent.clean)
+  sent.clean <- sent.clean[sent.clean != '']
+  all.sentences <- c(all.sentences, sent.clean)
+  all.recipes <- c(all.recipes, list(sent.clean))
 }
 print('building data structure...')
 
 
-text.block = all.sentences %>%
+text.block <- all.sentences %>%
   paste(collapse=' ') %>%
   strsplit('') %>%
   unlist()
@@ -72,12 +72,12 @@ chars <- text.block %>%
   sort()
 
 
-maxlen = 40
+maxlen <- 40
 dataset <- map(seq(1, length(text.block) - maxlen - 1, by = 1),
           ~list(sentence = paste(text.block[.x:(.x + maxlen - 1)], collapse=''), next_char = text.block[.x + maxlen])) %>%
   transpose()
-all.x.y = data.frame(x=unlist(dataset[[1]]), y=unlist(dataset[[2]]))
-num.data = nrow(all.x.y)
+all.x.y <- data.frame(x=unlist(dataset[[1]]), y=unlist(dataset[[2]]))
+num.data <- nrow(all.x.y)
 
 
 data_generator <- function(data, batch_size) {
@@ -92,7 +92,7 @@ data_generator <- function(data, batch_size) {
     y <- array(0, dim = c(length(row.indeces), length(chars)))
 
     for(each.row in 1:length(row.indeces)){
-      pre.chars = unlist(strsplit(data$x[[i + each.row - 1]], ''))
+      pre.chars <- unlist(strsplit(data$x[[i + each.row - 1]], ''))
       x[each.row,,] <- sapply(chars, function(rec.char) as.integer(rec.char == pre.chars))
       y[each.row,] <- as.integer(chars == data$y[[i + each.row - 1]])
     }
@@ -104,7 +104,6 @@ data_generator <- function(data, batch_size) {
     list(x, y)
   }
 }
-
 gen <- data_generator(data=all.x.y, batch_size = 768)
  
 optimizer <-  optimizer_rmsprop()
@@ -118,25 +117,25 @@ model <- keras_model_sequential() %>%
   layer_activation("softmax") %>%
   compile(loss = "categorical_crossentropy", optimizer = optimizer)
 
-num.epochs = 3
-model.history = model %>%
+num.epochs <- 3
+model.history <- model %>%
   fit_generator(gen, steps_per_epoch = num.data / 768, epochs=num.epochs)
 # model = load_model_hdf5('rec3_2000_7540.model')
 
-model.store = 'rec3_2000_7540_variable.model'
+model.store <- 'rec3_2000_7540.model'
 # print(paste('saving to', model.store))
 # save_model_hdf5(model, model.store)
 
-runPrediction = function() {
+runPrediction <- function() {
   start.idx <- sample(1:(length(text.block) - maxlen), size = 1)
   cur.sentence <- text.block[start.idx:(start.idx + maxlen - 1)]
   first.sentence <- cur.sentence
-  generated = ''
-  gen.length = 250000
-  start.cat = FALSE
-  cur_char = ''
-  i = 1
-  pb = txtProgressBar(min = i, max = gen.length, initial = 1, style = 3)
+  generated <- ''
+  gen.length <- 600
+  start.cat <- FALSE
+  cur_char <- ''
+  i <- 1
+  pb <- txtProgressBar(min = i, max = gen.length, initial = 1, style = 3)
   while (i < gen.length | cur_char != '.') {
     setTxtProgressBar(pb,i)
     x.pred <- sapply(chars, function(x) as.integer(x == cur.sentence))
@@ -151,18 +150,18 @@ runPrediction = function() {
       # cat(cur_char)
     }
     if (cur_char == '.') start.cat = TRUE
-    i = i + 1
+    i <- i + 1
   }
   close(pb)
   # cat('\n')
-  pred.steps = unlist(strsplit(substring(paste(generated, ' ', sep=''), 2), '\\. '))
-  cap.steps = paste(toupper(substring(pred.steps, 1, 1)),
+  pred.steps <- unlist(strsplit(substring(paste(generated, ' ', sep=''), 2), '\\. '))
+  cap.steps <- paste(toupper(substring(pred.steps, 1, 1)),
                           substring(pred.steps, 2),
                           '.',
                           sep = "")
   cap.steps
 }
-pred.output = runPrediction()
+pred.output <- runPrediction()
 pred.output
 # fileConn<-file(paste('../generated_', model.store, '.txt', sep=''))
 # writeLines(pred.output, fileConn)
