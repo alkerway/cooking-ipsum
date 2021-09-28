@@ -12,3 +12,14 @@ Below are a few of these recipes.
 
 
 `recipes.zip` contains around 15,000 recipe txt files with title, ingredients and method in the same format.
+
+
+The `ipsumlines_creative.txt` file was written with the same model but with more variability in the predictions, hence more non-english words and more bizzare recipes. A few are below:
+
+1. > ```Add the remaining butter with the sugar, salt, vinegar and 1-2 tablespoons of the milk to the remaining coffee in a thin strip and roughly knead for 1 hour. Stir in the chopped parsley and season with salt and pepper. Add the stock and continue to cook until the volume of liquid has reduced by half. Add the mushrooms and cook for a minute or so. Drain and set aside. For the chive beurre noisette, place the garlic and onions into the bowl and cream mixture```
+
+1. > ```For the roasted leeks, heat the thin slices for two minutes. Add the wild mushrooms and cook for a further 2-3 minutes. Whisk in the remaining butter and blend to a paste. Stir in the vinaigrette and beat with a wooden spoon until smooth. Season with salt and pepper. For the sauce, heat the butter in a pan until foaming, then add the sliced leeks and simmer for 20 minutes.```
+
+1. > ```Place the strawberries in a pan and cover with water and cook to reduce the liquid by half. Add the cream and mix well. Place them in a bowl with a pinch of salt until the mushrooms have softened and the mixture has thickened slightly. Blend the beef slices in a liquidiser with the shallots in cold water. Preheat the oven to 190c/375f/gas 5. Melt the butter in a saucepan and warm the mushrooms over a medium heat.```
+
+1. > ```To make the sauce, heat the sugar and 600ml/10fl oz water in a saucepan and bring to the boil. Cook the garlic for a further 10 minutes, stirring continuously. Place the pan into the oven and cook for a further 1-2 hours. Turn the puree out onto plates and place the vinaigrette not mixture into the middle of the plate and season with salt and pepper. Mix well. Dress the venison with the dressing and serve with some of the aubergines.```
