@@ -12,7 +12,7 @@ cleanChars <- function(txt) {
   txt <- gsub('[º]|[°]|[˚]', '⁰', txt)
   txt <- gsub('[⁄]', '/', txt)
   txt <- gsub('[[]|[{]', '(', txt)
-  txt <- gsub('[]]|[}]', '(', txt)
+  txt <- gsub('[]]|[}]', ')', txt)
   txt <- gsub('[¢]|[£]', '$', txt)
   txt <- gsub('\t', ' ', txt)
   txt <- gsub('[×]', 'x', txt)
